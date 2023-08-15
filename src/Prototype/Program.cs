@@ -7,16 +7,22 @@
 // This practise is particularly useful when
 // the construction of a new object is inefficient.
 
-var originalingdom = new Kingdom(money: 100, debt: 40, peopleCount: 200)
+var originalAirplane = new Airplane
 {
-    Domains = new List<KingdomDomain> { new KingdomDomain { Name = "Icefall" } }
+    Name = "Airbus 310",
+    SeatsCount = 560,
+    Passengers = new List<Passenger>
+    {
+        new Passenger { Name = "John Smith" }
+    }
 };
 
-var newKingdom = (Kingdom)originalingdom.Clone();
+var clonedAirplace = (Airplane)originalAirplane.Clone();
 
-newKingdom.PeopleCount = 300;
-newKingdom.Domains.Add(new KingdomDomain { Name = "Magician Sunrise" });
+// Changes will not affect originalAirplane
+clonedAirplace.SeatsCount = 300;
+clonedAirplace.Passengers.Add(new Passenger { Name = "Bruce Wayne" });
 
-Console.WriteLine($"Original kingdom:{Environment.NewLine}{originalingdom}{Environment.NewLine}");
+Console.WriteLine($"Original airplace:{originalAirplane}");
 
-Console.WriteLine($"New kingdom:{Environment.NewLine}{newKingdom}{Environment.NewLine}");
+Console.WriteLine($"Cloned airplane:{clonedAirplace}");
