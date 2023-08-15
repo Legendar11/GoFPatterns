@@ -5,12 +5,12 @@ using FactoryMethod.Enums;
 // Define an interface for creating an object, but let subclasses decide which class to instantiate.
 // The Factory method lets a class defer instantiation it uses to subclasses.
 
-ISwordFactory swordFactory = new RoyalBlacksmithFactory();
+IAirplaneFactory swordFactory = new AirspeedAirplaneFactory();
 
-ISword swordRequestedByGoverment = swordFactory.CreateDefaultSword();
-Console.WriteLine($"Goverment requested: {swordRequestedByGoverment.GetDescription()}");
+IAirplane civilAirplane = swordFactory.CreateCivilAirplane();
+Console.WriteLine($"Civil default airplane by Airspeed company: {civilAirplane.GetType().Name}");
 Console.WriteLine();
 
-ISword swordRequestedByZoltan = swordFactory.CreateHandworkSword(SwordType.Sabel, MetalType.Metal);
-Console.WriteLine($"Zoltan requested: {swordRequestedByZoltan.GetDescription()}");
+IAirplane customAirplane = swordFactory.CreateAirplane(Speed.Fast, SeatCount.Medium);
+Console.WriteLine($"Custom airplane by Airspeed company: {customAirplane.GetType().Name}");
 Console.WriteLine();
