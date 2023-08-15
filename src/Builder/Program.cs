@@ -1,33 +1,33 @@
 ﻿using Builder;
-using Builder.Characters;
 
 // Gand of Four, Builder:
 // The intent of the Builder design pattern is to separate the construction
 // of a complex object from its representation.
 // By doing so, the same construction process can create different representations.
 
-IGroupBuilder groupBuilder;
+// Using builder - we can create object in a fluent way with optional steps.
+// Each builder has own logic how to implement each step of construction
+// and how to provide builded final result.
+IPassengerInfoBuilder builder;
 
-// one representation of builder, will create a group
-groupBuilder = new AdventureGroupBuilder();
-var adventureGroup = groupBuilder
-    .SetDestination("New Jericho")
-    .AddCharacter(new Priest())
-    .AddCharacter(new Thief())
-    .AddCharacter(new Bard())
-    .AddLuckChance()
+// One implementation of builder
+builder = new AirSerbiaPassengerInfoBuilder();
+var airSerbiaPassengerInfo = builder
+    .SetPassengerFullName("Zoltan_Kines_Allaby_Vicconging") // will parse full name
+    .AddMeal("Standard meal")
+    .AddMeal("Standard meal")
+    .AddMeal("VIP meal") // will save all added meals
+    .RequestWheelChair()
+    .SetSeat("1B")
     .Build();
+Console.WriteLine($"Passenger information by Air Serbia:{airSerbiaPassengerInfo}");
 
-Console.WriteLine($"Adventure Group win chance is: {adventureGroup.WinChance:0.00}");
-Console.WriteLine();
-
-// second representation of builder, will create a group
-// by different rules with different result
-groupBuilder = new StandartGroupBuilder();
-var standardGroup = groupBuilder
-    .SetDestination("Hanaan")
-    .AddCharacter(new Paladin())
+// Second implementation of builder
+builder = new MontenegroAirlinesPassengerInfoBuilder();
+var montenegroAirlinesPassengerInfo = builder
+    .SetPassengerFullName("Zoltan_Kines_Allaby_Vicconging") // will parse only first and second name
+    .AddMeal("Standard meal")
+    .AddMeal("VIP meal") // will overwrite previous meal
     .Build();
+Console.WriteLine($"Passenger information by Montenegro Airlines:{montenegroAirlinesPassengerInfo}");
 
-Console.WriteLine($"Standard Group win chance is: {standardGroup.WinChance:0.00}");
-Console.WriteLine();
