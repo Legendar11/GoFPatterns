@@ -7,40 +7,41 @@ namespace Proxy;
 /// Enhanced implementation of interface tries to take data from cache,
 /// in case cache is empty - delegate work to real serving object.
 /// </summary>
-internal class CachedPassengerClient : IPassengerClient
+internal class CachedUserClient : IUserClient
 {
     // Proxy implements additional functionality regarding cache mechanism
     private readonly IMemoryCache _cache;
 
     // Proxy keeps reference to original implementation.
-    private readonly Lazy<PassengerClient> _passengerClient;
+    private readonly Lazy<UserClient> _usersClient;
     private readonly ILogger _logger;
 
-    private const string CacheKey = "passengers";
+    private const string CacheKey = "users";
 
-    public CachedPassengerClient(IMemoryCache cache, HttpClient httpClient, ILogger logger)
+    public CachedUserClient(IMemoryCache cache, HttpClient httpClient, ILogger logger)
     {
         _cache = cache;
         _logger = logger;
 
         // Proxy controls service object 
-        _passengerClient = new Lazy<PassengerClient>(() => new PassengerClient(httpClient, logger));
+        _usersClient = new Lazy<UserClient>(() => new UserClient(httpClient, logger));
     }
 
-    public async Task<IReadOnlyCollection<Passenger>?> GetPassengersAsync(CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyCollection<User>> GetUsersAsync(CancellationToken cancellationToken = default)
     {
         // Proxy tries to get data from cache before call real service object
-        if (_cache.TryGetValue(CacheKey, out IReadOnlyCollection<Passenger>? cachedPassengers))
+        if (_cache.TryGetValue(CacheKey, out IReadOnlyCollection<User>? cachedUsers)
+            && cachedUsers is not null)
         {
             _logger.Information("Data from cache");
-            return cachedPassengers;
+            return cachedUsers;
         }
 
-        var passengers = await _passengerClient.Value.GetPassengersAsync(cancellationToken);
+        var users = await _usersClient.Value.GetUsersAsync(cancellationToken);
 
         // Proxy put data in cache after call real service object
-        _cache.Set(CacheKey, passengers, TimeSpan.FromSeconds(5));
+        _cache.Set(CacheKey, users, TimeSpan.FromSeconds(5));
 
-        return passengers;
+        return users;
     }
 }

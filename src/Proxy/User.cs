@@ -2,7 +2,7 @@
 
 namespace Proxy;
 
-internal class Passenger
+internal class User
 {
     [JsonPropertyName("name")]
     public string Name { get; set; } = null!;

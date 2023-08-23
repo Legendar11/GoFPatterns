@@ -17,25 +17,25 @@ var provider = services.BuildServiceProvider();
 // For the client, usage of a proxy object is similar to using the real object, because both implement the same interface.
 
 // We don't know is it real serving object or its proxy version - the interface is the same
-IPassengerClient client = provider.GetService<IPassengerClient>()!;
 
 foreach (var _ in Enumerable.Range(0, 10))
 {
+    IUserClient client = provider.GetService<IUserClient>()!;
+
     // Proxy client will try to take data from cache 
-    await client.GetPassengersAsync();
+    await client.GetUsersAsync();
     await Task.Delay(TimeSpan.FromSeconds(1));
 }
 
-static void SetupInfrastructure()
+void SetupInfrastructure()
 {
     var logger = new LoggerConfiguration()
         .WriteTo.Console()
         .CreateLogger();
 
-    var services = new ServiceCollection();
     services.AddMemoryCache();
     services.AddHttpClient();
     services.AddSingleton<ILogger>(logger);
 
-    services.AddScoped<IPassengerClient, CachedPassengerClient>();
+    services.AddScoped<IUserClient, CachedUserClient>();
 }
