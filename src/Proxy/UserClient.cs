@@ -25,7 +25,7 @@ internal class UserClient : IUserClient
         var users = JsonSerializer.Deserialize<IReadOnlyCollection<User>>(responseContent);
         _logger.Information("Data from http client");
 
-        _ = users ?? throw new NullReferenceException("Data from  Users client is null");
+        _ = users ?? throw new NullReferenceException("Data from Users client is null");
         return users;
     }
 }

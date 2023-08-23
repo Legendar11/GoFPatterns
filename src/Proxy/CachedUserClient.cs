@@ -12,7 +12,7 @@ internal class CachedUserClient : IUserClient
     // Proxy implements additional functionality regarding cache mechanism
     private readonly IMemoryCache _cache;
 
-    // Proxy keeps reference to original implementation.
+    // Proxy keeps reference to original service and knows about inner implementation
     private readonly Lazy<UserClient> _usersClient;
     private readonly ILogger _logger;
 
