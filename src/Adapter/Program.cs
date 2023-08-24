@@ -2,19 +2,17 @@
 
 // Gang of Four, Adapter:
 // An adapter allows two incompatible interfaces to work together.
-// This is the real-world definition for an adapter.
 // Interfaces may be incompatible, but the inner functionality should suit the need.
 // The adapter design pattern allows otherwise incompatible classes to work together
 // by converting the interface of one class into an interface expected by the clients.
 
-// Galactic Empire has Tatooine planet.
-// They need to establish communication.
-// Galactice Empire needs to special adapter to contact with Tatooine.
+// Log client is hard to use - we need to use a specific adapter for it
+var adaptedLogClient = new LogClientAdapter(new LogClient());
 
-// Galactic Empire - Client,
-// Tatooine - Service with incompatible interface,
-// TatooineAdapter - Adapter with expected interface.
+// Fetch necessary data in comfort way via adapter
+var userId = Guid.NewGuid().ToString();
+var lastLogin = await adaptedLogClient.GetLastLoginAsync(userId);
+var lastResetPassword = await adaptedLogClient.GetLastResetPassword(userId);
 
-var empire = new GalacticEmpire();
-
-Console.WriteLine(empire);
+Console.WriteLine($"Last login was at: {lastLogin.ToString() ?? "no_data"}");
+Console.WriteLine($"Last reset password was at: {lastResetPassword.ToString() ?? "no_data"}");
