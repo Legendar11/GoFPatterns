@@ -85,13 +85,12 @@ internal class AirSerbiaPassengerInfoBuilder : IPassengerInfoBuilder
             services.Add((ServiceCategory.Meal, meal));
         }
 
-        return new PassengerInfo
-        {
-            FirstName = _passengerFirstName,
-            LastName = _passengerLastName,
-            MiddleName = _passengerMiddleName,
-            Patronyc = _passengerPatronyc,
-            Services = services
-        };
+        return new PassengerInfo(
+            _passengerFirstName,
+            _passengerMiddleName,
+            _passengerLastName,
+            _passengerPatronyc,
+            services
+        );
     }
 }

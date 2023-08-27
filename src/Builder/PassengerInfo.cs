@@ -1,17 +1,13 @@
 ﻿namespace Builder;
 
-internal record PassengerInfo
+internal record PassengerInfo(
+    string FirstName,
+    string? MiddleName,
+    string LastName,
+    string? Patronyc,
+    List<(ServiceCategory Service, string? Desciption)> Services
+)
 {
-    public string FirstName { get; init; } = null!;
-
-    public string? MiddleName { get; init; }
-
-    public string LastName { get; init; } = null!;
-
-    public string? Patronyc { get; init; }
-
-    public List<(ServiceCategory Service, string? Desciption)> Services { get; init; } = new List<(ServiceCategory Service, string? Desciption)>();
-
     public override string ToString()
     {
         return $"""

@@ -74,12 +74,13 @@ internal class MontenegroAirlinesPassengerInfoBuilder : IPassengerInfoBuilder
             services.Add((ServiceCategory.Meal, _meal));
         }
 
-        return new PassengerInfo
-        {
-            FirstName = _passengerFirstName,
-            LastName = _passengerLastName,
-            Services = services
-        };
+        return new PassengerInfo(
+            _passengerFirstName,
+            MiddleName: null,
+            _passengerLastName,
+            Patronyc: null,
+            services
+        );
 
         static string GetRandomSeat() => Guid.NewGuid().ToString().Substring(0, 2);
     }
