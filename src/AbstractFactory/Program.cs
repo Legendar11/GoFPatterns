@@ -1,44 +1,33 @@
 ﻿using AbstractFactory;
-using AbstractFactory.Factories;
+using AbstractFactory.Entities;
+using AbstractFactory.LeasingFactories;
 
 // Gang of Four, Abstract Factory:
 // An interface for creating families of related or dependent objects
 // without specifying their concrete classes.
 
-IAbstractFactory factory;
-IArmour armour;
-ISword sword;
-ITransport transport;
+ILeasingFactory factory;
+Airplane airplane;
+ServiceTeam serviceTeam;
 
-factory = new VillageFactory();
-(armour, sword, transport) = (
-    factory.CreateDefaultArmour(),
-    factory.CreateDefaultSword(),
-    factory.CreateDefaultTransport()
+factory = new GovermentLeasingFactory();
+(airplane, serviceTeam) = (
+    factory.CreateAirplane(),
+    factory.CreateServiceTeam()
 );
 PrintInfo();
 
-factory = new RoyalFactory();
-(armour, sword, transport) = (
-    factory.CreateDefaultArmour(),
-    factory.CreateDefaultSword(),
-    factory.CreateDefaultTransport()
-);
-PrintInfo();
-
-factory = new ForeignFactory();
-(armour, sword, transport) = (
-    factory.CreateDefaultArmour(),
-    factory.CreateDefaultSword(),
-    factory.CreateDefaultTransport()
+factory = new MilitaryLeasingFactory();
+(airplane, serviceTeam) = (
+    factory.CreateAirplane(),
+    factory.CreateServiceTeam()
 );
 PrintInfo();
 
 void PrintInfo() =>
     Console.WriteLine($"""
         {factory.GetType().Name}:
-            {armour.GetType().Name},
-            {sword.GetType().Name},
-            {transport.GetType().Name}
+            {airplane.GetType().Name},
+            {serviceTeam.GetType().Name}
         {Environment.NewLine}
     """);
