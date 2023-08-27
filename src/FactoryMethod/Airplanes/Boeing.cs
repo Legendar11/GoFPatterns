@@ -1,5 +1,5 @@
 ﻿namespace FactoryMethod.Swords;
 
-internal class Boeing : IAirplane
+internal record Boeing : Airplane
 {
 }

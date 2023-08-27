@@ -1,6 +1,6 @@
 ﻿namespace FactoryMethod.Swords;
 
-internal class Potez : IAirplane
+internal record Potez : Airplane
 {
     public bool HasAdditionalSeats { get; set; }
 

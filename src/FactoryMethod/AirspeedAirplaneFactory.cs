@@ -9,9 +9,9 @@ namespace FactoryMethod;
 /// </summary>
 internal class AirspeedAirplaneFactory : IAirplaneFactory
 {
-    public IAirplane CreateCivilAirplane() => new Boeing();
+    public Airplane CreateCivilAirplane() => new Boeing();
 
-    public IAirplane CreateAirplane(Speed type, SeatCount metal) => (type, metal) switch
+    public Airplane CreateAirplane(Speed type, SeatCount metal) => (type, metal) switch
     {
         (Speed.Fast, SeatCount.Medium) => new Airbus(),
         (Speed.Average, SeatCount.Low) => new Potez(hasAdditionalSeats: true),
