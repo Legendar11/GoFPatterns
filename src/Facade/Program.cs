@@ -1,6 +1,5 @@
 ﻿using Facade;
 using Facade.Clients;
-using System.Text.Json;
 
 // Software design pattern Facade:
 // This pattern hides the complexities of the larger system and provides a simpler interface to the client.
@@ -18,4 +17,4 @@ string userId = Guid.NewGuid().ToString();
 // Instead of write complex logic in caller method - put all of it into Facade method
 var user = await userService.GetUser(userId);
 
-Console.WriteLine(JsonSerializer.Serialize(user, new JsonSerializerOptions { WriteIndented = true }));
+Console.WriteLine(user);
