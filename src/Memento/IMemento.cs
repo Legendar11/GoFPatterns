@@ -1,6 +1,5 @@
 ﻿namespace Memento;
 
-internal interface IMemento<T>
+internal interface IMemento
 {
-    T State { get; set; }
-}
+};

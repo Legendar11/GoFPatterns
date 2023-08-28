@@ -2,32 +2,42 @@
 
 internal class Booking
 {
-    private BookingState _state;
+    private decimal _totalPrice = 0;
+
+    public List<(string, decimal)> ExtraServices { get; private set; } = new List<(string, decimal)>();
+
+    public decimal OriginalPrice { get; private set; } = 0;
 
     public Booking(decimal price)
     {
-        _state = new BookingState
-        {
-            ExtraServices = new List<(string, decimal)>(),
-            TotalPrice = price,
-            OriginalPrice = price,
-        };
+        OriginalPrice = price;
+        _totalPrice = price;
     }
 
     public void AddExtraService(string name, decimal price)
     {
         float markupPercentage = 0.10f;
 
-        _state.ExtraServices.Add((name, price));
+        ExtraServices.Add((name, price));
 
         var priceWithMarkup = price + price * (decimal)markupPercentage;
-        _state.TotalPrice += priceWithMarkup;
+        _totalPrice += priceWithMarkup;
     }
 
-    public IMemento<BookingState> Save() => new BookingMemento { State = _state };
+    public IMemento Save() => new BookingMemento(_totalPrice, ExtraServices, OriginalPrice);
 
-    public void Restore(IMemento<BookingState> memento)
+    public void Restore(IMemento memento)
     {
-        _state = memento.State;
+        var bookingMemento = (BookingMemento)memento;
+        
+        _totalPrice = bookingMemento.TotalPrice;
+        ExtraServices = bookingMemento.ExtraServices;
+        OriginalPrice = bookingMemento.OriginalPrice;
     }
+
+    private record BookingMemento(
+        decimal TotalPrice,
+        List<(string, decimal)> ExtraServices,
+        decimal OriginalPrice
+    ) : IMemento;
 }
