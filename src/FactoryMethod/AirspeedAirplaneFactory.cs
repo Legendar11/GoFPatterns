@@ -14,7 +14,7 @@ internal class AirspeedAirplaneFactory : IAirplaneFactory
     public Airplane CreateAirplane(Speed type, SeatCount metal) => (type, metal) switch
     {
         (Speed.Fast, SeatCount.Medium) => new Airbus(),
-        (Speed.Average, SeatCount.Low) => new Potez(hasAdditionalSeats: true),
+        (Speed.Average, SeatCount.Low) => new Potez(HasAdditionalSeats: true),
         (Speed.Fast, SeatCount.Large) => new Convair(),
         (Speed.Slow, SeatCount.Large) => new Boeing(),
         _ => throw new ArgumentOutOfRangeException($"Type: {type} with metal: {metal} is not supported")

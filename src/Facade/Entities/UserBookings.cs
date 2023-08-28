@@ -1,8 +1,6 @@
 ﻿namespace Facade.Entities;
 
-internal record UserBookings
-{
-    public string UserId { get; init; } = null!;
-
-    public IReadOnlyCollection<string> BookingsId { get; init; } = null!;
-}
+internal record UserBookings(
+    string UserId,
+    IReadOnlyCollection<string> BookingsId
+);

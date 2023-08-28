@@ -1,5 +1,3 @@
 ﻿namespace FactoryMethod.Swords;
 
-internal record Airbus : Airplane
-{
-}
+internal record Airbus : Airplane;

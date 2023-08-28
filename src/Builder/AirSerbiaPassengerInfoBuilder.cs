@@ -2,7 +2,7 @@
 
 internal class AirSerbiaPassengerInfoBuilder : IPassengerInfoBuilder
 {
-    private List<string> _meals = new List<string>();
+    private List<string> _meals = new();
     private bool _isWheelChairRequired;
     private string? _selectedSeat;
 
@@ -16,8 +16,6 @@ internal class AirSerbiaPassengerInfoBuilder : IPassengerInfoBuilder
     /// </summary>
     public IPassengerInfoBuilder SetPassengerFullName(string fullName, string? separator = "_")
     {
-        separator ??= ";";
-
         var values = fullName.Split(separator);
 
         _passengerFirstName = values[0];

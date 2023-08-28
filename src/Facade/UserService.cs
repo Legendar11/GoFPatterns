@@ -34,13 +34,12 @@ internal class UserService : IUserService
 
         await Task.WhenAll(metadataTask, statisticsTask, bookingsTask);
 
-        return new User
-        {
-            Id = userId,
-            HasAvatar = metadataTask.Result.Metadata.ContainsKey("avatar_id"),
-            Phone = metadataTask.Result.Metadata.TryGetValue("phone", out var phone) ? (string)phone : null,
-            LastLoginAt = statisticsTask.Result.LastBookingAt,
-            HasBookings = bookingsTask.Result.BookingsIds.Any()
-        };
+        return new User(
+            Id: userId,
+            HasAvatar: metadataTask.Result.Metadata.ContainsKey("avatar_id"),
+            Phone: metadataTask.Result.Metadata.TryGetValue("phone", out var phone) ? (string)phone : null,
+            LastLoginAt: statisticsTask.Result.LastBookingAt,
+            HasBookings: bookingsTask.Result.BookingsIds.Any()
+        );
     }
 }

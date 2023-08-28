@@ -6,7 +6,7 @@ internal class World
     private static readonly Lazy<World> _lazyInstance = new(() => new World());
 
     // Will be initiated after first call to any static property and before static constructor
-    private static readonly World _instance = new World();
+    private static readonly World _instance = new();
 
     public DateTime CreationDate { get; } = DateTime.Now;
 

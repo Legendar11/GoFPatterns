@@ -1,5 +1,3 @@
 ﻿namespace FactoryMethod.Swords;
 
-internal record Boeing : Airplane
-{
-}
+internal record Boeing : Airplane;

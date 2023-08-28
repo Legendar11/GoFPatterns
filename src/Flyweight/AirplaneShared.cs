@@ -3,7 +3,7 @@
 /// <summary>
 /// Inner state.
 /// </summary>
-internal readonly record struct AirplaneShared(
+internal record AirplaneShared(
     string Type,
     string Country
 );
