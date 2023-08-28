@@ -2,4 +2,5 @@
 
 internal interface IMemento
 {
+    void Restore();
 };

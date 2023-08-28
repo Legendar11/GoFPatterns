@@ -1,43 +1,48 @@
 ﻿namespace Memento;
 
-internal class Booking
+internal class Booking : ISaver
 {
-    private decimal _totalPrice = 0;
-
-    public List<(string, decimal)> ExtraServices { get; private set; } = new List<(string, decimal)>();
-
-    public decimal OriginalPrice { get; private set; } = 0;
+    // State is private, we can only set it (via Memento)
+    public BookingState State { private get; set; }
 
     public Booking(decimal price)
     {
-        OriginalPrice = price;
-        _totalPrice = price;
+        State = new BookingState
+        {
+            ExtraServices = new List<(string, decimal)>(),
+            TotalPrice = price,
+            OriginalPrice = price
+        };
     }
 
+    /// <summary>
+    /// Add a new change to State: add extra ervice.
+    /// </summary>
     public void AddExtraService(string name, decimal price)
     {
         float markupPercentage = 0.10f;
 
-        ExtraServices.Add((name, price));
+        State.ExtraServices.Add((name, price));
 
+        // Client shouldn't see TotalPrice - we aply additional secret markup,
+        // That's why State is private and encapsulation should be provided via Memento
         var priceWithMarkup = price + price * (decimal)markupPercentage;
-        _totalPrice += priceWithMarkup;
+        State.TotalPrice += priceWithMarkup;
     }
 
-    public IMemento Save() => new BookingMemento(_totalPrice, ExtraServices, OriginalPrice);
+    /// <summary>
+    /// Provide a new snapshot of current state.
+    /// </summary>
+    public IMemento Save() => new BookingMemento(this, new BookingState(State));
 
-    public void Restore(IMemento memento)
+    public override string ToString()
     {
-        var bookingMemento = (BookingMemento)memento;
-        
-        _totalPrice = bookingMemento.TotalPrice;
-        ExtraServices = bookingMemento.ExtraServices;
-        OriginalPrice = bookingMemento.OriginalPrice;
+        return $"""
+        Booking:
+            {nameof(State.TotalPrice)}: {State.TotalPrice}
+            {nameof(State.ExtraServices)}: {string.Join(", ", State.ExtraServices)}
+            {nameof(State.OriginalPrice)}: {State.OriginalPrice}
+        --------------------------------------------------------------
+        """;
     }
-
-    private record BookingMemento(
-        decimal TotalPrice,
-        List<(string, decimal)> ExtraServices,
-        decimal OriginalPrice
-    ) : IMemento;
 }
