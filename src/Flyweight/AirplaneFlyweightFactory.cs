@@ -19,7 +19,7 @@ internal class AirplaneFlyweightFactory : IAirplaneFlyweightFactory
         }
     }
 
-    public AirplaneFlyweight GetAirplaneFlyweight(AirplaneShared airplane)
+    public IAirplaneFlyweight GetAirplaneFlyweight(AirplaneShared airplane)
     {
         string key = airplane.ToString();
 

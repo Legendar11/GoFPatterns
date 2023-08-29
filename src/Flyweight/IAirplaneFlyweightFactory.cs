@@ -5,5 +5,5 @@
 /// </summary>
 internal interface IAirplaneFlyweightFactory
 {
-    AirplaneFlyweight GetAirplaneFlyweight(AirplaneShared airplane);
+    IAirplaneFlyweight GetAirplaneFlyweight(AirplaneShared airplane);
 }
