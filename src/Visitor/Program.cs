@@ -1,2 +1,8 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿
+using Visitor;
+using Visitor.Documents;
+
+IVisitor visitor = new DocumentVisitor();
+var documentManager = new TxtDocument("DocumentFiles/test.txt");
+
+documentManager.Accept(visitor);
