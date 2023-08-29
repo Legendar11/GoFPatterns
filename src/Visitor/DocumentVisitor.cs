@@ -4,6 +4,11 @@ namespace Visitor;
 
 internal class DocumentVisitor : IVisitor
 {
+    // Pattern implemented with ad-hoc polymorphism and double dispatching.
+    // C# allows to simplify pattern:
+    // 1. ad-hoc polymorphism can be replaced by pattern matching, which simply code but reduce perfomance.
+    // 2. double dispatching can be replaced by native multiple dispatching via 'dynamic'.
+
     public void Visit(TxtDocument document)
     {
         Console.WriteLine($"""
